@@ -1,24 +1,18 @@
 ﻿using ExcelDna.Integration;
+using ExcelDna.IntelliSense;
 
 namespace ExcelAD
 {
-    public class UDF
+    public class ExcelAD_AddIn : IExcelAddIn
     {
-        [ExcelFunction(Description = "First Desc")]
-        public static string SayHello(
-            [ExcelArgument(Description = "Name")] string name
-        )
+        public void AutoOpen()
         {
-            return "Hello " + name;
+            IntelliSenseServer.Install();
         }
 
-        [ExcelFunction(Description = "Second Desc")]
-        public static string SayBye(
-            [ExcelArgument(Description = "Name")]
-            string name
-        )
+        public void AutoClose()
         {
-            return "Hello " + name;
+            IntelliSenseServer.Uninstall();
         }
     }
 }
