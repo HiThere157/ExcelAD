@@ -7,11 +7,37 @@
 		<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui">
 			<ribbon>
 				<tabs>
-					<tab id="ExcelAD_Tab" label="Excel AD">
-						<group id="ExcelAD_Group" label="AD Reports">
-							<button id="ExcelAD_FetchUsers_Btn" onAction="OnLogonPressed" label="Fetch Users" size="large" imageMso="FileSave" />
-							<button id="ExcelAD_FetchGroups_Btn" onAction="OnLogonPressed" label="Fetch Groups" imageMso="FileSave" />
-							<button id="ExcelAD_FetchComputers_Btn" onAction="OnLogonPressed" label="Fetch Computers" imageMso="FileSave" />
+					<tab id="EAD_Tab" label="Excel AD">
+						<group id="EAD_Report_Group" label="AD Report">
+							<splitButton id="EAD_UserQuery_SBtn" size="large">
+								<button id="EAD_UserQuery_Btn" onAction="OnLogonPressed" label="User Query" imageMso="AccountMenu" />
+								<menu id="EAD_UserQuery_Menu">
+									<button id="EAD_UserMemberships_Btn" onAction="OnLogonPressed" label="Get Memberships" imageMso="GroupAuthors" />
+								</menu>
+							</splitButton>
+
+							<separator id="EAD_Report_Div1" />
+
+							<splitButton id="EAD_GroupQuery_SBtn" size="large">
+								<button id="EAD_GroupQuery_Btn" onAction="OnLogonPressed" label="Group Query" imageMso="AddDepartment" />
+								<menu id="EAD_GroupQuery_Menu">
+									<button id="EAD_GroupMembers_Btn" onAction="OnLogonPressed" label="Get Members" imageMso="GroupAuthors" />
+									<button id="EAD_GroupMemberships_Btn" onAction="OnLogonPressed" label="Get Memberships" imageMso="GroupAuthors" />
+								</menu>
+							</splitButton>
+
+							<separator id="EAD_Report_Div2" />
+
+							<splitButton id="EAD_ComputerQuery_SBtn" size="large">
+								<button id="EAD_ComputerQuery_Btn" onAction="OnLogonPressed" label="Computer Query" imageMso="InviteMyOtherComputers" />
+								<menu id="EAD_ComputerQuery_Menu">
+									<button id="EAD_ComputerMemberships_Btn" onAction="OnLogonPressed" label="Get Memberships" imageMso="GroupAuthors" />
+								</menu>
+							</splitButton>
+						</group>
+
+						<group id="EAD_Other_Group" label="Other">
+							<button id="EAD_Wiki_Btn" onAction="OnLogonPressed" label="Open Wiki" size="large" imageMso="CreateMap" />
 						</group>
 					</tab>
 				</tabs>
