@@ -4,13 +4,14 @@
 	<Reference Path="ExcelDna.IntelliSense.dll" Pack="true" />
 
 	<CustomUI>
-		<customUI xmlns='http://schemas.microsoft.com/office/2009/07/customui'>
+		<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui">
 			<ribbon>
 				<tabs>
-					<tab id='ExcelAD_Tab' label='Excel AD'>
-						<group id='ExcelAD_Group' label='AD Users'>
-							<button id='ExcelAD_FetchUsers_Btn' onAction='OnLogonPressed' label='Fetch Users' imageMso='FileSave' />
-							<button id='ExcelAD_FetchGroups_Btn' onAction='OnLogonPressed' label='Fetch Groups' imageMso='FileSave' />
+					<tab id="ExcelAD_Tab" label="Excel AD">
+						<group id="ExcelAD_Group" label="AD Reports">
+							<button id="ExcelAD_FetchUsers_Btn" onAction="OnLogonPressed" label="Fetch Users" size="large" imageMso="FileSave" />
+							<button id="ExcelAD_FetchGroups_Btn" onAction="OnLogonPressed" label="Fetch Groups" imageMso="FileSave" />
+							<button id="ExcelAD_FetchComputers_Btn" onAction="OnLogonPressed" label="Fetch Computers" imageMso="FileSave" />
 						</group>
 					</tab>
 				</tabs>
@@ -34,5 +35,5 @@
 
        Excel-DNA also allows the XML for ribbon UI extensions to be specified in the .dna file.
        See the main Excel-DNA site at https://excel-dna.net for downloads of the full distribution.
-  -->
+	-->
 </DnaLibrary>
