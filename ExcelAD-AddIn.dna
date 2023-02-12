@@ -3,6 +3,21 @@
 	<ExternalLibrary Path="ExcelAD.dll" ExplicitExports="false" LoadFromBytes="true" Pack="true" IncludePdb="false" />
 	<Reference Path="ExcelDna.IntelliSense.dll" Pack="true" />
 
+	<CustomUI>
+		<customUI xmlns='http://schemas.microsoft.com/office/2009/07/customui'>
+			<ribbon>
+				<tabs>
+					<tab id='ExcelAD_Tab' label='Excel AD'>
+						<group id='ExcelAD_Group' label='AD Users'>
+							<button id='ExcelAD_FetchUsers_Btn' onAction='OnLogonPressed' label='Fetch Users' imageMso='FileSave' />
+							<button id='ExcelAD_FetchGroups_Btn' onAction='OnLogonPressed' label='Fetch Groups' imageMso='FileSave' />
+						</group>
+					</tab>
+				</tabs>
+			</ribbon>
+		</customUI>
+	</CustomUI>
+
 	<!--
        The RuntimeVersion attribute above allows only the following setting:
        * RuntimeVersion="v4.0" - for .NET 4.5 or higher
@@ -10,7 +25,7 @@
        You can have IntelliSense (autocomplete) and validation for this file.
        See https://github.com/Excel-DNA/ExcelDna/tree/master/Distribution/XmlSchemas/
 
-       Additional referenced assemblies can be specified by adding 'Reference' tags. 
+       Additional referenced assemblies can be specified by adding "Reference" tags. 
        These libraries will not be examined and registered with Excel as add-in libraries, 
        but will be packed into the -packed.xll file and loaded at runtime as needed.
        For example:
