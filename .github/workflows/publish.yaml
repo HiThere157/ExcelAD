@@ -30,9 +30,19 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           try {
-            const response = await github.rest.repos.createRelease({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const oldReleases = await github.repo.repos.getReleaseByTag({
+              owner,
+              repo,
+              tag: `v${process.env.RELEASE_VERSION}`
+            })
+            console.log(JSON.stringify(oldReleases))
+
+            const newRelease = await github.rest.repos.createRelease({
+              owner,
+              repo,
               name: process.env.RELEASE_VERSION,
               tag_name: `v${process.env.RELEASE_VERSION}`,
               draft: true,
@@ -41,9 +51,9 @@ jobs:
             const fs = require("fs");
             ["ExcelAD-AddIn-packed.xll", "ExcelAD-AddIn64-packed.xll"].forEach((file) => {
               github.rest.repos.uploadReleaseAsset({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                release_id: response.data.id,
+                owner,
+                repo,
+                release_id: newRelease.data.id,
                 name: file,
                 data: fs.readFileSync(`./bin/Release/net6.0-windows/publish/${file}`),
               });
