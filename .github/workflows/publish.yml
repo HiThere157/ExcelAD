@@ -21,20 +21,11 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
 
-    - name: Publish
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: ${{ github.ref }}
-        draft: true
-        prerelease: false
-
     - run: echo "RELEASE_VERSION=$(cat ExcelAD.csproj | grep -o '<Version>.*</Version>' | grep -o '[0-9\.]*')" >> $GITHUB_ENV
+    - run: echo "RELEASE_VERSION=$(cat ExcelAD.csproj | grep -o '<Version>.*</Version>' | grep -o '[0-9\.]*')"
+    - run: ls
 
-    - name: Create release
+    - name: Create Release
       uses: actions/github-script@v6
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
