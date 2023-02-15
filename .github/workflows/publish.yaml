@@ -42,13 +42,13 @@ jobs:
             });
 
             const fs = require("fs");
-            ["ExcelAD-AddIn-packed.xll", "ExcelAD-AddIn64-packed.xll"].forEach((file) => {
+            ["ExcelAD-AddIn", "ExcelAD-AddIn64"].forEach((file) => {
               github.rest.repos.uploadReleaseAsset({
                 owner,
                 repo,
                 release_id: newRelease.data.id,
-                name: file,
-                data: fs.readFileSync(`./bin/Release/net6.0-windows/publish/${file}`),
+                name: `${file}-${process.env.RELEASE_VERSION}.xll`,
+                data: fs.readFileSync(`./bin/Release/net6.0-windows/publish/${file}-packed.xll`),
               });
             })
 
