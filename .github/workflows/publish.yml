@@ -32,11 +32,22 @@ jobs:
         draft: true
         prerelease: false
 
-    - uses: actions/upload-release-asset@v1.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create release
+      run: echo "RELEASE_VERSION=$(cat ExcelAD.csproj | grep -o '<Version>.*</Version>' | grep -o '[0-9\.]*')" >> $GITHUB_ENV
+
+      uses: actions/github-script@v6
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./my-artifact.zip
-        asset_name: my-artifact.zip
-        asset_content_type: application/zip
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          try {
+            const response = await github.rest.repos.createRelease({
+              draft: true,
+              name: process.env.RELEASE_VERSION,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: process.env.RELEASE_VERSION,
+            });
+
+          } catch (error) {
+            core.setFailed(error.message);
+          }
