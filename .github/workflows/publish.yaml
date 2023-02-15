@@ -21,7 +21,8 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
 
-    - run: echo "RELEASE_VERSION=$(cat ExcelAD.csproj | grep -o '<Version>.*</Version>' | grep -o '[0-9\.]*')" >> $env:GITHUB_ENV
+    - name: Prepare Release
+      run: echo "RELEASE_VERSION=$(cat ExcelAD.csproj | grep -o '<Version>.*</Version>' | grep -o '[0-9\.]*')" >> $env:GITHUB_ENV
 
     - name: Create Release
       uses: actions/github-script@v6
@@ -37,11 +38,13 @@ jobs:
               draft: true,
             });
 
+            console.log(JSON.stringify(response))
+
             const fs = require("fs");
             github.rest.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              release_id: response.id,
+              release_id: response.Id,
               name: "ExcelAD-AddIn64-packed.xll",
               data: fs.readFileSync("./bin/Release/net6.0-windows/publish/ExcelAD-AddIn64-packed.xll"),
             });
