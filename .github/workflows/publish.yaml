@@ -10,7 +10,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Setup .NET Core SDK 6.0
+    - name: Setup .NET Core SDK
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0
@@ -44,7 +44,7 @@ jobs:
             github.rest.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              release_id: response.Id,
+              release_id: response.data.id,
               name: "ExcelAD-AddIn64-packed.xll",
               data: fs.readFileSync("./bin/Release/net6.0-windows/publish/ExcelAD-AddIn64-packed.xll"),
             });
