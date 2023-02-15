@@ -30,11 +30,20 @@ jobs:
         script: |
           try {
             const response = await github.rest.repos.createRelease({
-              draft: true,
-              name: process.env.RELEASE_VERSION,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              tag_name: process.env.RELEASE_VERSION,
+              name: process.env.RELEASE_VERSION,
+              tag_name: `v${process.env.RELEASE_VERSION}`,
+              draft: true,
+            });
+
+            const fs = require("fs");
+            github.rest.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: response.id,
+              name: "ExcelAD-AddIn64-packed.xll",
+              data: fs.readFileSync("./bin/Release/net6.0-windows/publish/ExcelAD-AddIn64-packed.xll"),
             });
 
           } catch (error) {
