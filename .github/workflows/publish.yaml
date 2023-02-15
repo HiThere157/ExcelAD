@@ -33,13 +33,6 @@ jobs:
             const owner = context.repo.owner;
             const repo = context.repo.repo;
 
-            const oldReleases = await github.rest.repos.getReleaseByTag({
-              owner,
-              repo,
-              tag: `v${process.env.RELEASE_VERSION}`
-            })
-            console.log(JSON.stringify(oldReleases))
-
             const newRelease = await github.rest.repos.createRelease({
               owner,
               repo,
