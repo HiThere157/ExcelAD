@@ -7,51 +7,51 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0
 
-    - name: Install Dependencies
-      run: dotnet restore
+      - name: Install Dependencies
+        run: dotnet restore
 
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
 
-    - name: Prepare Release
-      run: echo "RELEASE_VERSION=$(cat ExcelAD.csproj | grep -o '<Version>.*</Version>' | grep -o '[0-9\.]*')" >> $env:GITHUB_ENV
+      - name: Prepare Release
+        run: echo "RELEASE_VERSION=$(cat ExcelAD.csproj | grep -o '<Version>.*</Version>' | grep -o '[0-9\.]*')" >> $env:GITHUB_ENV
 
-    - name: Create Release
-      uses: actions/github-script@v6
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          try {
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
+      - name: Create Release
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            try {
+              const owner = context.repo.owner;
+              const repo = context.repo.repo;
 
-            const newRelease = await github.rest.repos.createRelease({
-              owner,
-              repo,
-              name: process.env.RELEASE_VERSION,
-              tag_name: `v${process.env.RELEASE_VERSION}`,
-              draft: true,
-            });
-
-            const fs = require("fs");
-            ["ExcelAD-AddIn", "ExcelAD-AddIn64"].forEach((file) => {
-              github.rest.repos.uploadReleaseAsset({
+              const newRelease = await github.rest.repos.createRelease({
                 owner,
                 repo,
-                release_id: newRelease.data.id,
-                name: `${file}-${process.env.RELEASE_VERSION}.xll`,
-                data: fs.readFileSync(`./bin/Release/net6.0-windows/publish/${file}-packed.xll`),
+                name: process.env.RELEASE_VERSION,
+                tag_name: `v${process.env.RELEASE_VERSION}`,
+                draft: true,
               });
-            })
 
-          } catch (error) {
-            core.setFailed(error.message);
-          }
+              const fs = require("fs");
+              ["ExcelAD-AddIn", "ExcelAD-AddIn64"].forEach((file) => {
+                github.rest.repos.uploadReleaseAsset({
+                  owner,
+                  repo,
+                  release_id: newRelease.data.id,
+                  name: `${file}-${process.env.RELEASE_VERSION}.xll`,
+                  data: fs.readFileSync(`./bin/Release/net6.0-windows/publish/${file}-packed.xll`),
+                });
+              })
+
+            } catch (error) {
+              core.setFailed(error.message);
+            }
