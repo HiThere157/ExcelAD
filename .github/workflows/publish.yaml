@@ -38,16 +38,16 @@ jobs:
               draft: true,
             });
 
-            console.log(JSON.stringify(response))
-
             const fs = require("fs");
-            github.rest.repos.uploadReleaseAsset({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              release_id: response.data.id,
-              name: "ExcelAD-AddIn64-packed.xll",
-              data: fs.readFileSync("./bin/Release/net6.0-windows/publish/ExcelAD-AddIn64-packed.xll"),
-            });
+            ["ExcelAD-AddIn-packed.xll", "ExcelAD-AddIn64-packed.xll"].forEach((file) => {
+              github.rest.repos.uploadReleaseAsset({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                release_id: response.data.id,
+                name: file,
+                data: fs.readFileSync(`./bin/Release/net6.0-windows/publish/${file}`),
+              });
+            })
 
           } catch (error) {
             core.setFailed(error.message);
