@@ -1,5 +1,6 @@
 ﻿using ExcelDna.Integration.CustomUI;
 using System.Runtime.InteropServices;
+using ExcelAD.WPF;
 
 namespace ExcelAD.Ribbon
 {
@@ -8,7 +9,8 @@ namespace ExcelAD.Ribbon
     {
         public void OnLogonPressed(IRibbonControl control)
         {
-            MessageBox.Show("Hello from control " + control.Id);
+            Window1 win1 = new Window1();
+            win1.Show();
         }
     }
 }
