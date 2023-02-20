@@ -13,7 +13,7 @@ jobs:
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 4.8.0
+          dotnet-version: 3.5.x
 
       - name: Install Dependencies
         run: dotnet restore
