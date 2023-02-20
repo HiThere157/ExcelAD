@@ -1,5 +1,9 @@
-﻿using ExcelDna.Integration;
+﻿using System;
+using System.Windows.Forms;
+using System.Collections.Generic;
 using System.DirectoryServices;
+using System.Linq;
+using ExcelDna.Integration;
 
 namespace ExcelAD.UDF
 {
@@ -13,10 +17,10 @@ namespace ExcelAD.UDF
             [ExcelArgument(Description = "The Search Domain")] string domain
         )
         {
-            DirectoryEntry? directoryEntry = null;
+            DirectoryEntry directoryEntry = null;
             try
             {
-                IEnumerable<string> domainParts = domain.Split(".").Select(part => "dc=" + part);
+                IEnumerable<string> domainParts = domain.Split('.').Select(part => "dc=" + part);
 
                 directoryEntry = new DirectoryEntry($"LDAP://{String.Join(",", domainParts)}");
                 DirectorySearcher searcher = new DirectorySearcher(directoryEntry);
@@ -28,7 +32,7 @@ namespace ExcelAD.UDF
                 {
                     case 1:
                         ResultPropertyCollection properties = searchResults[0].Properties;
-                        string? return_value = (string?)properties[return_property][0];
+                        string return_value = (string)properties[return_property][0];
 
                         if (return_value == null) return ExcelError.ExcelErrorNA;
                         return return_value.ToString();

@@ -10,7 +10,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup .NET Core SDK
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0
@@ -48,7 +48,7 @@ jobs:
                   repo,
                   release_id: newRelease.data.id,
                   name: `${file}-${process.env.RELEASE_VERSION}.xll`,
-                  data: fs.readFileSync(`./bin/Release/net6.0-windows/publish/${file}-packed.xll`),
+                  data: fs.readFileSync(`./bin/Release/net48-windows/publish/${file}-packed.xll`),
                 });
               })
 
