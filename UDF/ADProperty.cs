@@ -15,8 +15,7 @@ namespace ExcelAD.UDF
 
             try
             {
-                IEnumerable<string> domainParts = domain.Split('.').Select(part => "dc=" + part);
-                directoryEntry = new DirectoryEntry($"LDAP://{String.Join(",", domainParts)}");
+                directoryEntry = new DirectoryEntry($"LDAP://{domain}");
 
                 DirectorySearcher searcher = new DirectorySearcher(directoryEntry);
                 searcher.Filter = $"(&(objectClass={filter_type})({filter_property}={filter_value}))";
