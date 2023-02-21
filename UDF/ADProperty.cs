@@ -15,7 +15,7 @@ namespace ExcelAD.UDF
 
             try
             {
-                directoryEntry = new DirectoryEntry($"LDAP://{domain}");
+                directoryEntry = new DirectoryEntry($"LDAP://{domain}", null, null, AuthenticationTypes.Secure | AuthenticationTypes.Sealing);
 
                 DirectorySearcher searcher = new DirectorySearcher(directoryEntry);
                 searcher.Filter = $"(&(objectClass={filter_type})({filter_property}={filter_value}))";
