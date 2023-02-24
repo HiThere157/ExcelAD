@@ -1,0 +1,24 @@
+﻿<Window x:Class="ExcelAD.WPF.SearchWindow.SearchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ExcelAD.WPF.SearchWindow"
+        mc:Ignorable="d"
+        Title="SearchWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Frame Grid.Row="0" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden"/>
+
+        <Border Grid.Row="1" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" BorderThickness="0,1,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,7"  >
+                <Button Command="{Binding Back}" Margin="0,0,10,0" Padding="20,0">Back</Button>
+                <Button Command="{Binding Forward}" Padding="20,0">Next</Button>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

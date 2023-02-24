@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using ExcelDna.Integration.CustomUI;
-using ExcelAD.WPF;
+using ExcelAD.WPF.SearchWindow;
 
 namespace ExcelAD.Ribbon
 {
@@ -11,10 +11,9 @@ namespace ExcelAD.Ribbon
     {
         public void OnLogonPressed(IRibbonControl control)
         {
-            MessageBox.Show("yo");
             try
             {
-                Window1 win1 = new Window1();
+                SearchWindow win1 = new SearchWindow();
                 win1.Show();
             }
             catch (Exception ex)
