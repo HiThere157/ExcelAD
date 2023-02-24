@@ -30,17 +30,18 @@ namespace ExcelAD.WPF.SearchWindow
         public ClassSelectPage()
         {
             InitializeComponent();
+            DataContext = this;
 
-            _getSchemas("Alcon.net");
+            Schemas = _getSchemas("Alcon.net");
         }
-        private void _getSchemas(string domain)
+        private ReadOnlyActiveDirectorySchemaClassCollection _getSchemas(string domain)
         {
             DirectoryEntry directoryEntry = null;
             try
             {
                 directoryEntry = new DirectoryEntry($"LDAP://{domain}", null, null, AuthenticationTypes.Secure | AuthenticationTypes.Sealing);
                 ActiveDirectorySchema currentSchema = ActiveDirectorySchema.GetCurrentSchema();
-                Schemas = currentSchema.FindAllClasses();
+                return currentSchema.FindAllClasses();
             }
             finally
             {
